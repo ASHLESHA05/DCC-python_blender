@@ -14,7 +14,10 @@ app = Flask(__name__)
 def log_request(endpoint):
     """Logs incoming request details."""
     print(f"Received request on {endpoint} - Method: {request.method}")
-    print(f"Data: {request.json}")
+    if request.method in ['POST', 'PUT'] and request.is_json:
+        print(f"Data: {request.get_json()}")
+    else:
+        print("No JSON data in request or not required")
 
 @app.route('/')
 def hello():
@@ -117,10 +120,10 @@ def update():
 
 
 # now we ned to define tigger to get all the logs of delete / update including provded timestamp
-@app.route('get-all-logs',methods=['GET'])
+@app.route('/get-all-logs',methods=['GET'])
 def get_all_logs():
     try:
-        log_request('/file-path')
+        log_request('/get-all-logs')
         time.sleep(10)
         delete = request.args.get('delete', default='false', type=str)
 
