@@ -97,14 +97,9 @@ class InventoryApp(QWidget):
         
         self.layout.addLayout(self.button_layout)
         
-        refresh_layout = QVBoxLayout()
         self.refresh_button = QPushButton("Refresh")
         self.refresh_button.clicked.connect(self.loadInventory)
-
-        refresh_layout.addWidget(self.refresh_button)
-        refresh_layout.addStretch()  # Adds space below the button
-
-        self.layout.addLayout(refresh_layout)
+        self.layout.addWidget(self.refresh_button)
         
         # Processing Spinner
         self.spinner = QProgressBar()
@@ -128,7 +123,7 @@ class InventoryApp(QWidget):
         self.inventory = items
         self.inventory_list.clear()
         for item, qty in items.items():
-            self.inventory_list.addItem(f"{item}")
+            self.inventory_list.addItem(f"{item} ({qty})")
     
     def addItem(self):
         item_name = self.search_input.text().strip()
